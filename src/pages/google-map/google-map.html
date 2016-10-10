@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Google Maps</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="home">
+  <div style="height: 100%;" id="map_canvas">
+      <div class="search-map">
+          <ion-searchbar (ionInput)="getPosition($event)"></ion-searchbar>
+      </div>      
+      <ion-fab left top>
+          <button ion-fab color="light" class="fab-map" (click)="changeMapType()">
+            <ion-icon name="images"></ion-icon>
+          </button>
+      </ion-fab>
+      <div>
+          <!-- use div will append next to the map_container-->
+          <!--<div #map_container></div>-->
+          <!-- use template will append into the inside of map_container-->
+          <template #map_container></template>
+      </div>        
+  </div>
+</ion-content>
