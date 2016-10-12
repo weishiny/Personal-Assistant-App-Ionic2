@@ -2,8 +2,34 @@ ion-app._gmaps_cdv_ .nav-decor {
     background-color: transparent !important;
 }
 
+.iconRight {
+    position: absolute !important;
+    top: 7px !important;
+    right: 5px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+}
+
 .fab-map {
     margin-top: 50px;
+}
+
+.toggle-map {
+    width: 20%;
+    margin-top: 70px;
+    margin-left: 5px;
+    ion-label.Restaurant {
+        color: #4169E1;
+        font-weight: bold;
+    }
+    ion-label.Cafe {
+        color: #32db64;
+        font-weight: bold;
+    }
+    ion-label.School {
+        color: #f53d3d;
+        font-weight: bold;
+    }
 }
 
 .search-map {

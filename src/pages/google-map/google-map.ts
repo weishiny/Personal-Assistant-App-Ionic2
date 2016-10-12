@@ -6,7 +6,9 @@ import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker, GoogleM
 import 'rxjs/add/operator/map';
 import { PopOverComponent } from '../popover/popover';
 
-//const mapConfig: any;
+//even though I've already installed typescript definition file for google.map,
+//it's still occur: Error: Cannot find name 'google', so I just use the following method 
+declare var google; 
 
 @Component({
     templateUrl: 'google-map.html'
@@ -18,12 +20,15 @@ export class GoogleMapComponent {
     //1. ElementRef instance if there is no component applied, or the
     //2. component instance if there is.
     //3. If you want to get something different you need to explicitely tell using read.
-    @ViewChild('map_container', {read: ViewContainerRef}) MapContainerRef: any;
+    @ViewChild('map_container', {read: ViewContainerRef}) MapContainerRef: any;    
 
-    map: GoogleMap;
+    map: GoogleMap;    
     location: GoogleMapsLatLng;
     Markers: GoogleMapsLatLng[] = [];
     MapTypeCount: number = 1;
+    restaurantEnabled: any;
+    cafeEnabled: any;
+    schoolEnabled: any;
 
     constructor(public _navController: NavController, public platform: Platform, 
                 public PopoverCtrl: PopoverController, ViewContainer: ViewContainerRef,
@@ -293,6 +298,75 @@ export class GoogleMapComponent {
         //please see the googlemaps-cdv-plugin.js: App.prototype.setMapTypeId
         //There are some remark you can examine                        
         this.map.setMapTypeId(MapTypeDef[this.MapTypeCount++ % MapTypeDef.length]);
+    }
+
+    ToggleChange(event: any, inquirytype: string): void {
+        //Use setTimeout to let ionic toggle animation can be showed
+        setTimeout(() => {
+            if (this.restaurantEnabled === true || this.cafeEnabled === true || this.schoolEnabled === true) {
+                /**
+                 * We're writing an Ionic 2 app in TypeScript. But we don’t have the typescript definitions for google maps API. 
+                 * First of all, we'll need to install them. 
+                 * typings for Google Maps JS SDK: Syntax => 
+                 * 1. typings search google.maps
+                 * 2. typings install dt~google.maps --global
+                 * After this action, we can use google maps JS
+                 */
+
+                let nowLocation = new google.maps.LatLng(this.location.lat, this.location.lng);
+                let jsMap = new google.maps.Map(document.getElementById('map_canvas'), {
+                    center: nowLocation,
+                    zoom: 15,
+                    scrollwheel: false
+                });
+
+                // Specify location, radius and place types for your Places API search.
+                // Create the PlaceService and send the request.
+                // Handle the callback with an anonymous function.
+                let placeService = new google.maps.places.PlacesService(jsMap);
+                let option:{} = {
+                    location: nowLocation,
+                    radius: 1500,
+                    types: [inquirytype]
+                };                        
+                placeService.nearbySearch(option, (results, status) => {                
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        for (let i = 0; i < results.length; i++) {
+                            let place = results[i];
+                            // If the request succeeds, draw the place location on the map as a marker, 
+                            //and register an event to handle a click on the marker.                            
+                            let imageUrl: string;                                                        
+                            if (this.restaurantEnabled === true)
+                                imageUrl = 'assets/images/RestaurantIcon.png';
+                            else if (this.cafeEnabled === true)
+                                imageUrl = 'assets/images/CafeIcon.png';
+                            else if (this.schoolEnabled === true)
+                                imageUrl = 'assets/images/SchoolIcon.png';
+                            else
+                                imageUrl = '';
+
+                            let marker = new google.maps.Marker({
+                                map: jsMap,
+                                icon: imageUrl,
+                                position: place.geometry.location
+                            });
+                            let infowindow = new google.maps.InfoWindow();
+                            google.maps.event.addListener(marker, 'click', function() {
+                                infowindow.setContent('<div><img src="' + place.icon + '"><strong>' + place.name + '</strong><br>' +
+                                '<strong>Vicinity:</strong> ' + place.vicinity + '<br>' + '</div>');
+                                infowindow.open(jsMap, this);
+                            });
+                        }
+                    }
+                });                                                                    
+            } else {
+
+            }
+        }, 500);          
+    }     
+
+    changeToOriginalMap(): void {
+        this.loadMap();
     }
 
     private handleError(error: any): Promise<any> {

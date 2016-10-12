@@ -1,6 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Google Maps</ion-title>
+        <div class="iconRight">
+            <button ion-button icon-only color="light" (click)="changeToOriginalMap()">
+                <ion-icon name="globe"></ion-icon>
+            </button>
+        </div>
     </ion-navbar>
 </ion-header>
 
@@ -14,6 +19,14 @@
             <ion-icon name="images"></ion-icon>
           </button>
       </ion-fab>
+      <div class="toggle-map">
+          <ion-label class="Restaurant">Restaurant</ion-label>
+          <ion-toggle color="royal" checked="false" [(ngModel)]="restaurantEnabled" (ionChange)="ToggleChange($event,'restaurant')"></ion-toggle>
+          <ion-label class="Cafe">Cafe</ion-label>
+          <ion-toggle color="secondary" checked="false" [(ngModel)]="cafeEnabled" (ionChange)="ToggleChange($event,'cafe')"></ion-toggle>
+          <ion-label class="School">School</ion-label>
+          <ion-toggle color="danger" checked="false" [(ngModel)]="schoolEnabled" (ionChange)="ToggleChange($event,'school')"></ion-toggle>
+      </div>      
       <div>
           <!-- use div will append next to the map_container-->
           <!--<div #map_container></div>-->
