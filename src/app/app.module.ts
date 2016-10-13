@@ -5,6 +5,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { GoogleMapComponent } from '../pages/google-map/google-map';
+import { GoogleMapPlacesComponent } from '../pages/google-map/google-map-places';
 import { PopOverComponent } from '../pages/popover/popover';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { PopOverComponent } from '../pages/popover/popover';
     ItemDetailsPage,
     ListPage,
     GoogleMapComponent,
+    GoogleMapPlacesComponent,
     PopOverComponent
   ],
   imports: [
@@ -26,6 +28,7 @@ import { PopOverComponent } from '../pages/popover/popover';
     ItemDetailsPage,
     ListPage,
     GoogleMapComponent,
+    GoogleMapPlacesComponent,
     PopOverComponent
   ],
   providers: []

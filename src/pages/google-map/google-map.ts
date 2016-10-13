@@ -4,11 +4,8 @@ import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker, GoogleM
          GoogleMapsMarkerOptions, Geocoder, GeocoderRequest, GeocoderResult, Geolocation,
          AnimateCameraOptions } from 'ionic-native';
 import 'rxjs/add/operator/map';
-import { PopOverComponent } from '../popover/popover';
-
-//even though I've already installed typescript definition file for google.map,
-//it's still occur: Error: Cannot find name 'google', so I just use the following method 
-declare var google; 
+//import { PopOverComponent } from '../popover/popover';
+import { GoogleMapPlacesComponent } from './google-map-places';
 
 @Component({
     templateUrl: 'google-map.html'
@@ -30,7 +27,7 @@ export class GoogleMapComponent {
     cafeEnabled: any;
     schoolEnabled: any;
 
-    constructor(public _navController: NavController, public platform: Platform, 
+    constructor(public navCtrl: NavController, public platform: Platform, 
                 public PopoverCtrl: PopoverController, ViewContainer: ViewContainerRef,
                 private componentFactoryResolver: ComponentFactoryResolver, public alertCtrl: AlertController) {
         this.platform.ready().then(() => {
@@ -82,12 +79,11 @@ export class GoogleMapComponent {
                     'bearing': 50
                 }
             };                                                
-            this.map = new GoogleMap('map_canvas', option);
-            //alert('Success getting location: ' + this.location);
+            this.map = new GoogleMap('map_canvas', option);            
         }).then(() => {                        
             //let latlng: GoogleMapsLatLng = new GoogleMapsLatLng(24.9919378, 121.2335611);            
             this.map.on(GoogleMapsEvent.MAP_READY).subscribe(() => {
-                console.log("GoogleMap.onMapReady()");                            
+                console.log("GoogleMap.onMapReady()");
                 // Move to the position with animation
                 let AnimateCameraOptions: AnimateCameraOptions = {
                     target: this.location,
@@ -209,8 +205,7 @@ export class GoogleMapComponent {
         let geocoderRequest: GeocoderRequest = { 'position': latLng };
         Geocoder.geocode(geocoderRequest).then((results: GeocoderResult[]) => {            
             if (results.length) {
-                let result = results[0];
-                let position = result.position; 
+                let result = results[0];                
                 let address = [
                     result.subThoroughfare || "",
                     result.thoroughfare || "",
@@ -300,72 +295,22 @@ export class GoogleMapComponent {
         this.map.setMapTypeId(MapTypeDef[this.MapTypeCount++ % MapTypeDef.length]);
     }
 
-    ToggleChange(event: any, inquirytype: string): void {
-        //Use setTimeout to let ionic toggle animation can be showed
-        setTimeout(() => {
-            if (this.restaurantEnabled === true || this.cafeEnabled === true || this.schoolEnabled === true) {
-                /**
-                 * We're writing an Ionic 2 app in TypeScript. But we don’t have the typescript definitions for google maps API. 
-                 * First of all, we'll need to install them. 
-                 * typings for Google Maps JS SDK: Syntax => 
-                 * 1. typings search google.maps
-                 * 2. typings install dt~google.maps --global
-                 * After this action, we can use google maps JS
-                 */
+    ToggleChange(event: any, inquirytype: string): void {       
+        //Destroy the native map completely so that we can operate google-map-places, otherwise, we can't click or move map
+        this.map.remove();
 
-                let nowLocation = new google.maps.LatLng(this.location.lat, this.location.lng);
-                let jsMap = new google.maps.Map(document.getElementById('map_canvas'), {
-                    center: nowLocation,
-                    zoom: 15,
-                    scrollwheel: false
-                });
-
-                // Specify location, radius and place types for your Places API search.
-                // Create the PlaceService and send the request.
-                // Handle the callback with an anonymous function.
-                let placeService = new google.maps.places.PlacesService(jsMap);
-                let option:{} = {
-                    location: nowLocation,
-                    radius: 1500,
-                    types: [inquirytype]
-                };                        
-                placeService.nearbySearch(option, (results, status) => {                
-                    if (status === google.maps.places.PlacesServiceStatus.OK) {
-                        for (let i = 0; i < results.length; i++) {
-                            let place = results[i];
-                            // If the request succeeds, draw the place location on the map as a marker, 
-                            //and register an event to handle a click on the marker.                            
-                            let imageUrl: string;                                                        
-                            if (this.restaurantEnabled === true)
-                                imageUrl = 'assets/images/RestaurantIcon.png';
-                            else if (this.cafeEnabled === true)
-                                imageUrl = 'assets/images/CafeIcon.png';
-                            else if (this.schoolEnabled === true)
-                                imageUrl = 'assets/images/SchoolIcon.png';
-                            else
-                                imageUrl = '';
-
-                            let marker = new google.maps.Marker({
-                                map: jsMap,
-                                icon: imageUrl,
-                                position: place.geometry.location
-                            });
-                            let infowindow = new google.maps.InfoWindow();
-                            google.maps.event.addListener(marker, 'click', function() {
-                                infowindow.setContent('<div><img src="' + place.icon + '"><strong>' + place.name + '</strong><br>' +
-                                '<strong>Vicinity:</strong> ' + place.vicinity + '<br>' + '</div>');
-                                infowindow.open(jsMap, this);
-                            });
-                        }
-                    }
-                });                                                                    
-            } else {
-
-            }
-        }, 500);          
+        this.navCtrl.push(GoogleMapPlacesComponent, {
+            restaurantEnabled: this.restaurantEnabled,
+            cafeEnabled: this.cafeEnabled,
+            schoolEnabled: this.schoolEnabled,
+            inquirytype: inquirytype,
+            location: this.location
+        });                
     }     
 
     changeToOriginalMap(): void {
+        this.map.remove(); //Destroy the native map completely        
+        this.Markers.length = 0; //Clear all marker data
         this.loadMap();
     }
 
