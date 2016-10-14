@@ -35,6 +35,28 @@ export class GoogleMapComponent {
         });
     }
 
+    /**
+     * If we're running in Ionic, the OnInit will only fire when the view is loaded. That means, it will only fire once. 
+     * Ionic 2's navigation module caches views in the DOM the same way Ionic 1 does, so the view is generally only loaded 
+     * once.
+     * Fortunately, Ionic packages a set of view lifecycle hooks into the NavController – part of the Ionic module. 
+     * They follow four patterns of event handlers:
+     * ionViewDidLoaded works the same way as ngOnInit, fires once when the view is initially loaded into the DOM
+     * ionViewWillEnter and ionViewDidEnter are hooks that are available before and after the page in question becomes active
+     * ionViewWillLeave and ionViewDidLeave are hooks that are available before and after the page leaves the viewport
+     * ionViewWillUnload and ionViewDidUnload are hooks that are available before and after the page is removed from the DOM
+     * 
+     * So, we want to avoid the issue of google map disappeared after navigation, we need to use ionViewDidEnter, which the 
+     * one we're looking for, which fires every time a page becomes the active view.
+     */
+    ionViewDidEnter() {
+        //There is need to trigger the resize event on the google maps object everytime you enter the specific page. 
+        //So place the following code in the ionViewDidEnter() event.
+        console.log('didenter');
+        this.map.remove();
+        this.loadMap();
+    }
+
     private loadMap(): void {        
 
         Geolocation.getCurrentPosition().then(position => {
