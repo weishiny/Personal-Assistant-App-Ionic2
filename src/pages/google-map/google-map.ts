@@ -1,11 +1,11 @@
 import { Component, ViewContainerRef, ViewChild, ComponentFactoryResolver } from "@angular/core";
-import { NavController, Platform, PopoverController, AlertController } from 'ionic-angular';
+import { NavController, Platform, AlertController } from 'ionic-angular';
 import { GoogleMap, GoogleMapsEvent, GoogleMapsLatLng, GoogleMapsMarker, GoogleMapsAnimation,
          GoogleMapsMarkerOptions, Geocoder, GeocoderRequest, GeocoderResult, Geolocation,
          AnimateCameraOptions } from 'ionic-native';
 import 'rxjs/add/operator/map';
-//import { PopOverComponent } from '../popover/popover';
 import { GoogleMapPlacesComponent } from './google-map-places';
+import { NotesDetailComponent } from '../notes-detail/notes-detail';
 
 @Component({
     templateUrl: 'google-map.html'
@@ -28,8 +28,8 @@ export class GoogleMapComponent {
     schoolEnabled: any;
 
     constructor(public navCtrl: NavController, public platform: Platform, 
-                public PopoverCtrl: PopoverController, ViewContainer: ViewContainerRef,
-                private componentFactoryResolver: ComponentFactoryResolver, public alertCtrl: AlertController) {
+                ViewContainer: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver, 
+                public alertCtrl: AlertController) {
         this.platform.ready().then(() => {
             this.loadMap();                        
         });
@@ -52,7 +52,7 @@ export class GoogleMapComponent {
     ionViewDidEnter() {
         //There is need to trigger the resize event on the google maps object everytime you enter the specific page. 
         //So place the following code in the ionViewDidEnter() event.
-        console.log('didenter');
+        console.log('didenter');                
         this.map.remove();
         this.loadMap();
     }
@@ -139,14 +139,18 @@ export class GoogleMapComponent {
 
                         //Catch the Marker InfoWindow event
                         marker.addEventListener(GoogleMapsEvent.INFO_CLICK).subscribe(
-                            () => {
-                                alert('***InfoWindow click***');
-                                /**show popover control, it can't be used to edit info on popover page when it exists on map */
-                                //let Popover = this.PopoverCtrl.create(PopOverComponent);
-                                //Popover.present();                            
+                            (latLng: GoogleMapsLatLng) => {
+                                alert('***InfoWindow click***');                                
                                 /**Dynamically append component into DOM */
                                 //let factory = this.componentFactoryResolver.resolveComponentFactory(PopOverComponent);
-                                //let res = this.MapContainerRef.createComponent(factory);                            
+                                //let res = this.MapContainerRef.createComponent(factory);
+
+                                //Destroy the native map completely so that we can operate navigation page, otherwise, we can't operate
+                                this.map.remove();
+                                this.navCtrl.push(NotesDetailComponent, {
+                                    lat: latLng.lat,
+                                    lng: latLng.lng
+                                });                            
                             }, 
                             (error) => {
                                 console.log(error);
@@ -197,14 +201,18 @@ export class GoogleMapComponent {
             
             //Catch the Marker InfoWindow event
             marker.addEventListener(GoogleMapsEvent.INFO_CLICK).subscribe(
-                () => {
-                    alert('***InfoWindow click***');
-                    /**show popover control, it can't be used to edit info on popover page when it exists on map */
-                    //let Popover = this.PopoverCtrl.create(PopOverComponent);
-                    //Popover.present();
+                (latLng: GoogleMapsLatLng) => {
+                    alert('***InfoWindow click***');                    
                     /**Dynamically append component into DOM */
                     //let factory = this.componentFactoryResolver.resolveComponentFactory(PopOverComponent);
-                    //let res = this.MapContainerRef.createComponent(factory);                    
+                    //let res = this.MapContainerRef.createComponent(factory);
+                    
+                    //Destroy the native map completely so that we can operate navigation page, otherwise, we can't operate
+                    this.map.remove();
+                    this.navCtrl.push(NotesDetailComponent, {
+                        lat: latLng.lat,
+                        lng: latLng.lng
+                    });                    
                 }, 
                 (error) => {
                     console.log(error);

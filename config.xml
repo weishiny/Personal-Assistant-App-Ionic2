@@ -60,8 +60,6 @@
   <plugin name="cordova-plugin-googlemaps" spec="~1.3.9">
     <variable name="API_KEY_FOR_ANDROID" value="AIzaSyATMzCgjz6rIQy7c-fzh72gJFzYIk64JSI" />
   </plugin>
-  <plugin name="phonegap-plugin-push" spec="~1.8.2">
-    <variable name="SENDER_ID" value="241898815294" />    
-  </plugin>  
-  <!--Create by myself-->  
+  <plugin name="cordova-sqlite-storage" spec="~1.4.8"/>  
+  <!--Create by myself-->    
 </widget>

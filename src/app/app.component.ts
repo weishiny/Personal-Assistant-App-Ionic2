@@ -7,6 +7,8 @@ import { StatusBar } from 'ionic-native';
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
 import { GoogleMapComponent } from '../pages/google-map/google-map';
+import { NotesListComponent } from '../pages/notes-list/notes-list';
+import { NotesDetailComponent } from '../pages/notes-detail/notes-detail';
 
 
 @Component({
@@ -29,7 +31,9 @@ export class MyApp {
     this.pages = [
       { title: 'Hello Ionic', component: HelloIonicPage },
       { title: 'My First List', component: ListPage },
-      { title: 'Google Map', component: GoogleMapComponent }
+      { title: 'Google Map', component: GoogleMapComponent },
+      { title: 'Notes List', component: NotesListComponent },
+      { title: 'Notes Detail', component: NotesDetailComponent }
     ];
   }
 

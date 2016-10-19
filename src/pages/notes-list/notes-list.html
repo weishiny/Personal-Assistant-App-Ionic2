@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+        Notes List
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item-sliding *ngFor="let notesitem of notesitems">
+            <ion-item>
+                <ion-avatar item-left>
+                <img src="img/avatar-finn.png">
+                </ion-avatar>
+                <h2>{{notesitem.title}}</h2>
+                <h3>{{notesitem.position}}</h3>
+                <p>{{notesitem.rate}}</p>
+            </ion-item>
+
+            <ion-item-options side="right">
+                <button ion-button color="primary" icon-left (click)="showAlert(notesitem, 'text')">
+                    <ion-icon name="paper"></ion-icon>
+                    Modify
+                </button>
+                <button ion-button color="secondary" icon-left (click)="showAlert(notesitem, 'call')">
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
+                </button>
+            </ion-item-options>
+            
+            <ion-item-options side="left">
+                <button ion-button color="primary" icon-left (click)="showPopover(notesitem)">
+                    <ion-icon name="attach"></ion-icon>
+                    Detail
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>        
+    </ion-list>
+    
+    <ion-fab right bottom>
+        <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+        <ion-fab-list side="top">
+            <button ion-fab color="primary" (click)="onEdit()"><ion-icon name="alarm"></ion-icon></button>
+            <button ion-fab color="green"><ion-icon name="beer"></ion-icon></button>
+            <button ion-fab color="purple"><ion-icon name="boat"></ion-icon></button>
+            <button ion-fab color="danger"><ion-icon name="ionic"></ion-icon></button>
+        </ion-fab-list>
+    </ion-fab>
+</ion-content>
