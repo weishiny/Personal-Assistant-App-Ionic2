@@ -1,70 +1,78 @@
 <ion-header>
     <ion-navbar>
+      <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+      </button>
       <ion-title>
-        Notes Detail
+          Notes Detail
       </ion-title>
+      <div class="divRight">
+          <button ion-button clear color="dark">          
+              <ion-icon name="close"></ion-icon>
+          </button>          
+          <button ion-button clear color="dark">
+              <ion-icon name="checkmark"></ion-icon>
+          </button>          
+      </div>      
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-
-  <ion-fab top right edge>
-    <button ion-fab color="vibrant" mini><ion-icon name="add"></ion-icon></button>
-    <ion-fab-list>
-      <button ion-fab><ion-icon name="alarm"></ion-icon></button>
-      <button ion-fab><ion-icon name="beer"></ion-icon></button>
-      <button ion-fab><ion-icon name="boat"></ion-icon></button>
-      <button ion-fab><ion-icon name="ionic"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab right bottom>
-    <button ion-fab color="light"><ion-icon name="arrow-dropleft"></ion-icon></button>
-    <ion-fab-list side="left">
-      <button ion-fab><ion-icon name="alarm"></ion-icon></button>
-      <button ion-fab><ion-icon name="beer"></ion-icon></button>
-      <button ion-fab><ion-icon name="boat"></ion-icon></button>
-      <button ion-fab><ion-icon name="ionic"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab left top>
-    <button ion-fab color="secondary"><ion-icon name="arrow-dropright"></ion-icon></button>
-    <ion-fab-list side="right">
-      <button ion-fab><ion-icon name="alarm"></ion-icon></button>
-      <button ion-fab><ion-icon name="beer"></ion-icon></button>
-      <button ion-fab><ion-icon name="boat"></ion-icon></button>
-      <button ion-fab><ion-icon name="ionic"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab left bottom>
-    <button ion-fab color="dark"><ion-icon name="arrow-dropup"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab><ion-icon name="alarm"></ion-icon></button>
-      <button ion-fab><ion-icon name="beer"></ion-icon></button>
-      <button ion-fab><ion-icon name="boat"></ion-icon></button>
-      <button ion-fab><ion-icon name="ionic"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab center middle>
-    <button ion-fab color="danger"><ion-icon name="md-share"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab color="primary"><ion-icon name="alarm"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="bottom">
-      <button ion-fab color="secondary"><ion-icon name="beer"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="left">
-      <button ion-fab color="light"><ion-icon name="boat"></ion-icon></button>
-    </ion-fab-list>
-    <ion-fab-list side="right">
-      <button ion-fab color="dark"><ion-icon name="ionic"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-
-  <ion-fab right middle>
-    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
+    <ion-card>
+        <ion-item>
+            <ion-avatar item-left>
+                <img src="assets/img/marty-avatar.png">
+            </ion-avatar>
+            <h2>Notes</h2>
+            <p>November 5, 1955</p>
+        </ion-item>
+        <img src="img/advance-card-bttf.png">                   
+        <ion-item>
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Position</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Restaurant</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Meal</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Price</ion-label>
+            <ion-input type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>Date</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="NotesDate"></ion-datetime>
+        </ion-item>        
+        <ion-item>
+            <ion-label floating>Description</ion-label>
+            <ion-textarea rows="5"></ion-textarea>
+        </ion-item>
+        <ion-row>
+            <ion-col>
+                <button ion-button color="primary" clear small icon-left>
+                    <ion-icon name='thumbs-up'></ion-icon>
+                    12 Likes
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button color="primary" clear small icon-left>
+                    <ion-icon name='text'></ion-icon>
+                    4 Comments
+                </button>
+            </ion-col>
+            <ion-col center text-center>
+                <ion-note>
+                    11h ago
+                </ion-note>
+            </ion-col>
+        </ion-row>
+    </ion-card>  
 </ion-content>

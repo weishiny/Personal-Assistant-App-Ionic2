@@ -19,7 +19,7 @@
             </ion-item>
 
             <ion-item-options side="right">
-                <button ion-button color="primary" icon-left (click)="showAlert(notesitem, 'text')">
+                <button ion-button color="primary" icon-left (click)="onModify(notesitem)">
                     <ion-icon name="paper"></ion-icon>
                     Modify
                 </button>
@@ -41,7 +41,7 @@
     <ion-fab right bottom>
         <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
         <ion-fab-list side="top">
-            <button ion-fab color="primary" (click)="onEdit()"><ion-icon name="alarm"></ion-icon></button>
+            <button ion-fab color="primary" (click)="onCreate()"><ion-icon name="alarm"></ion-icon></button>
             <button ion-fab color="green"><ion-icon name="beer"></ion-icon></button>
             <button ion-fab color="purple"><ion-icon name="boat"></ion-icon></button>
             <button ion-fab color="danger"><ion-icon name="ionic"></ion-icon></button>

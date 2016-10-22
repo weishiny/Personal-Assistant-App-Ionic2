@@ -9,11 +9,11 @@ import { PopOverComponent } from '../popover/popover';
 })
 export class NotesListComponent implements OnInit{
 
-    notesitems: any[] = [];
+    notesitems: any[] = [];    
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform,
                 public alertCtrl: AlertController, public PopoverCtrl: PopoverController) {
-
+        
     }
 
     ngOnInit() {
@@ -47,7 +47,11 @@ export class NotesListComponent implements OnInit{
         Popover.present();
     }
 
-    onEdit() {
+    onCreate(): void {
         this.navCtrl.push(NotesDetailComponent);
+    }
+
+    onModify(notesitem: {}): void {
+        this.navCtrl.push(NotesDetailComponent, notesitem);
     }
 }
