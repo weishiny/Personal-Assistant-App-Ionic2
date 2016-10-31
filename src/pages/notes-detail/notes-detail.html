@@ -7,10 +7,10 @@
           Notes Detail
       </ion-title>
       <div class="divRight">
-          <button ion-button clear color="dark">          
+          <button ion-button clear color="dark" (click)="onCancel()">          
               <ion-icon name="close"></ion-icon>
           </button>          
-          <button ion-button clear color="dark">
+          <button ion-button clear color="dark" (click)="onSave()">
               <ion-icon name="checkmark"></ion-icon>
           </button>          
       </div>      
@@ -29,31 +29,31 @@
         <img src="img/advance-card-bttf.png">                   
         <ion-item>
             <ion-label floating>Title</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="TitleValue"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Position</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="PositionValue"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Restaurant</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="RestaurantValue"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Meal</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="MealValue"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Price</ion-label>
-            <ion-input type="text"></ion-input>
+            <ion-input type="text" [(ngModel)]="PriceValue"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>Date</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="NotesDate"></ion-datetime>
+            <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="NotesDateValue"></ion-datetime>
         </ion-item>        
         <ion-item>
             <ion-label floating>Description</ion-label>
-            <ion-textarea rows="5"></ion-textarea>
+            <ion-textarea rows="5" [(ngModel)]="DescriptionValue"></ion-textarea>
         </ion-item>
         <ion-row>
             <ion-col>
