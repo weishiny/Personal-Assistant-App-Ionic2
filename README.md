@@ -11,3 +11,7 @@ instead of
 > ionic plugin add https://github.com/phonegap-googlemaps-plugin/cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="YOUR_ANDROID_API_KEY_IS_HERE" --variable API_KEY_FOR_IOS="YOUR_IOS_API_KEY_IS_HERE"
 
 Please make sure that the API Key has already be applied before using Google Maps.
+
+## ToDoList:
+- [ ] Firebase Realtime Database (https://firebase.google.com/docs/database/)
+- [ ] Firebase Authentication (https://firebase.google.com/docs/auth/)
